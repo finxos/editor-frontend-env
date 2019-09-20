@@ -1,5 +1,6 @@
 (function() {
   var global = global || window || self || Function('return this')();
+  var DOT_IP_RE = /\d+\./;
   var ENV_CONFIG = {
     development: {
       ENTRY_POINT: 'https://tu-dev.finxos.com'
@@ -27,6 +28,9 @@
       case env === 'development':
       case host === 'tu-dev.finxos.com':
         result = ENV_CONFIG.development;
+        break;
+      case DOT_IP_RE.test(host):
+        result = window.location.origin;
         break;
       default:
         result = ENV_CONFIG[host];
